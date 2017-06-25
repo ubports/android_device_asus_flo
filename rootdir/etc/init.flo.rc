@@ -196,11 +196,11 @@ on post-fs-data
     rm /data/local/tmp/adreno_config.txt
 
     # White LED
-    chown system system /sys/class/leds/white/device/lock
-    chown system system /sys/class/leds/white/brightness
-    chown system system /sys/class/leds/white/device/grpfreq
-    chown system system /sys/class/leds/white/device/grppwm
-    chown system system /sys/class/leds/white/device/blink
+    chmod 0666 /sys/class/leds/white/device/lock
+    chmod 0666  /sys/class/leds/white/brightness
+    chmod 0666   /sys/class/leds/white/device/grpfreq
+    chmod 0666  /sys/class/leds/white/device/grppwm
+    chmod 0666  /sys/class/leds/white/device/blink
 
     # communicate with mpdecision and thermald
     mkdir /dev/socket/mpdecision 2770 root system
