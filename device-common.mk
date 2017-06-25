@@ -25,13 +25,16 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 # A list of dpis to select prebuilt apk, in precedence order.
 PRODUCT_AAPT_PREBUILT_DPI := hdpi
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ubuntu.widi.supported=1
 # Audio
 PRODUCT_PACKAGES += \
     audio.primary.msm8960 \
     audio.a2dp.default \
     audio.usb.default \
     audio.r_submix.default \
-    libaudio-resampler
+    libaudio-resampler \
+		tinymix
 
 PRODUCT_COPY_FILES += \
     device/asus/flo/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
@@ -49,18 +52,10 @@ TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1200
 TARGET_BOOTANIMATION_HALF_RES := true
 
-# Camera
-PRODUCT_PACKAGES += \
-    Snap
-
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images \
     charger_touch
-
-# Gello
-PRODUCT_PACKAGES += \
-    Gello
 
 # Graphics
 PRODUCT_PACKAGES += \
@@ -68,7 +63,10 @@ PRODUCT_PACKAGES += \
     hwcomposer.msm8960 \
     gralloc.msm8960 \
     copybit.msm8960 \
-    memtrack.msm8960
+    memtrack.msm8960 \
+		libqdutils \
+    libqdMetaData \
+    liboverlay
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -127,6 +125,7 @@ PRODUCT_COPY_FILES += \
 
 # OMX
 PRODUCT_PACKAGES += \
+    libc2dcolorconvert \
     libOmxVdec \
     libOmxVenc \
     libOmxCore \
