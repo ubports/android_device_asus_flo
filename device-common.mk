@@ -200,7 +200,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libqcomvoiceprocessingdescriptors
-    
+
+# Ubuntu Overlay Files
+PRODUCT_COPY_FILES += \
+    device/asus/flo/ubuntu/usr/lib/lxc-android-config/70-flo.rules:system/ubuntu/usr/lib/lxc-android-config/70-flo.rules
+
 #This keeps time correct across reboots
 PRODUCT_PACKAGES += timekeep
 
