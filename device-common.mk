@@ -203,7 +203,10 @@ PRODUCT_PACKAGES += \
 
 # Ubuntu Overlay Files
 PRODUCT_COPY_FILES += \
-    device/asus/flo/ubuntu/usr/lib/lxc-android-config/70-flo.rules:system/ubuntu/usr/lib/lxc-android-config/70-flo.rules
+    device/asus/flo/ubuntu/usr/lib/lxc-android-config/70-flo.rules:system/ubuntu/usr/lib/lxc-android-config/70-flo.rules \
+    device/asus/flo/ubuntu/usr/share/repowerd/device-configs/config-flo.xml:system/ubuntu/usr/share/repowerd/device-configs/config-flo.xml \
+    device/asus/flo/ubuntu/etc/ubuntu-touch-session.d/flo.conf:system//ubuntu/etc/ubuntu-touch-session.d/flo.conf \
+    device/asus/flo/ubuntu/etc/init/android-tools-adbd.conf:system/ubuntu/etc/init/android-tools-adbd.conf
 
 #This keeps time correct across reboots
 PRODUCT_PACKAGES += timekeep
