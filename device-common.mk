@@ -34,7 +34,7 @@ PRODUCT_PACKAGES += \
     audio.usb.default \
     audio.r_submix.default \
     libaudio-resampler \
-		tinymix
+    tinymix
 
 PRODUCT_COPY_FILES += \
     device/asus/flo/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
@@ -64,7 +64,7 @@ PRODUCT_PACKAGES += \
     gralloc.msm8960 \
     copybit.msm8960 \
     memtrack.msm8960 \
-		libqdutils \
+    libqdutils \
     libqdMetaData \
     liboverlay
 
@@ -200,6 +200,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libqcomvoiceprocessingdescriptors
+    
+#This keeps time correct across reboots
+PRODUCT_PACKAGES += timekeep
 
 
 # Dalvik/HWUI
