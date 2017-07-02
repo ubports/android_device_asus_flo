@@ -18,8 +18,25 @@ TARGET_BOOTLOADER_BOARD_NAME := flo
 TARGET_BOOTLOADER_NAME := flo
 TARGET_BOARD_INFO_FILE := device/asus/flo/board-info.txt
 
+BOARD_HAL_STATIC_LIBRARIES := libdumpstate.flo
+
 TARGET_RELEASETOOLS_EXTENSIONS := device/asus/flo
 
-TARGET_RECOVERY_FSTAB = device/asus/flo/rootdir/etc/fstab.flo
+TARGET_RECOVERY_FSTAB = device/asus/flo/fstab.flo
 
+-include vendor/asus/flo/BoardConfigVendor.mk
 include device/asus/flo/BoardConfigCommon.mk
+
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+# if we are using inline compilation, treat it as using prebuilt kernel
+#ifdef TARGET_KERNEL_SOURCE
+#    BOARD_USE_PREBUILT_KERNEL := true
+#endif
+
+# make sure we have at least some kernel to use
+#ifndef BOARD_USE_PREBUILT_KERNEL
+#   TARGET_KERNEL_UBUNTU := true
+#    TARGET_KERNEL_UBUNTU_META := linux-image-flo
+#   TARGET_KERNEL_UBUNTU_SERIES := vivid
+#endif

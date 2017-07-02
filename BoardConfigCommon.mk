@@ -14,13 +14,17 @@
 # limitations under the License.
 #
 
+TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
+ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_NO_BOOTLOADER := true
+TARGET_NO_BOOTLOADER := false
 
 BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_PAGESIZE := 2048
@@ -29,7 +33,7 @@ BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=flo user_
 BOARD_KERNEL_CMDLINE += vmalloc=340M
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 TARGET_KERNEL_SOURCE := kernel/google/msm
-TARGET_KERNEL_CONFIG := cyanogenmod_flo_defconfig
+TARGET_KERNEL_CONFIG := cyanogen_flo_defconfig
 
 BOARD_USES_ALSA_AUDIO:= true
 BOARD_USES_LEGACY_ALSA_AUDIO:= false
@@ -56,9 +60,10 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP  := "ap"
 
+BOARD_EGL_CFG := device/asus/flo/egl.cfg
+
 #BOARD_USES_HGL := true
 #BOARD_USES_OVERLAY := true
-NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 USE_OPENGL_RENDERER := true
 PRESENT_TIME_OFFSET_FROM_VSYNC_NS := 3200000
 TARGET_USES_ION := true
@@ -77,14 +82,13 @@ endif
 WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 23068672 # 22M
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 880803840 # 840M
 
-#Reduce space taken by the journal
-BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
-
+# Ubuntu loop image
+BOARD_UBUNTUROOTFSIMAGE_PARTITION_SIZE := 2097152000 # 2.0G
+BOARD_UBUNTUROOTFS_LOOP_MOUNTED := true
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 12348030976 # 11.5G
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 
@@ -95,7 +99,6 @@ USE_CAMERA_STUB := false
 BOARD_USES_CAMERA_FAST_AUTOFOCUS := false
 
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
-BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 TARGET_NO_RPC := true
 
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -106,7 +109,6 @@ BOARD_PERSISTIMAGE_PARTITION_SIZE := 5242880
 
 TARGET_USES_POST_PROCESSING := true
 TARGET_CUSTOM_DISPLAY_TUNING := true
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
 USE_DEVICE_SPECIFIC_QCOM_PROPRIETARY := true
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
@@ -117,17 +119,48 @@ HAVE_ADRENO_SOURCE:= false
 
 BOARD_SEPOLICY_DIRS += device/asus/flo/sepolicy
 
+# The list below is order dependent
+BOARD_SEPOLICY_UNION += \
+        bluetooth_loader.te \
+        bridge.te \
+        camera.te \
+        conn_init.te \
+        device.te \
+        domain.te \
+        file.te \
+        file_contexts \
+        hostapd.te \
+        irsc_util.te \
+        kickstart.te \
+        mediaserver.te \
+        mpdecision.te \
+        netmgrd.te \
+        property.te \
+        property_contexts \
+        qmux.te \
+        rild.te \
+        rmt.te \
+        sensors.te \
+        surfaceflinger.te \
+        system_server.te \
+        tee.te \
+        te_macros \
+        thermald.te \
+        ueventd.te
+
 # Enable Minikin text layout engine (will be the default soon)
 USE_MINIKIN := true
 
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
-# CM Hardware
-BOARD_HARDWARE_CLASS += \
-    hardware/cyanogen/cmhw
+# Ubuntu rootfs definitions
+# BOARD_UBUNTU_DEVICE_FLASH_SERVER_URL := http://system-image.ubuntu.com
+#BOARD_UBUNTU_DEVICE_FLASH_CHANNEL := rc-proposed/ubuntu
+#BOARD_UBUNTU_DEVICE_FLASH_DEVICE := generic
+# BOARD_UBUNTU_DEVICE_FLASH_VERSION :=
 
-# Recovery
-TARGET_RECOVERY_DENSITY := hdpi
-
--include vendor/asus/flo/BoardConfigVendor.mk
+# Ubuntu bringup options
+BOARD_USE_LOCAL_INITRD := true
+# More additional space to allow debugging
+BOARD_SYSTEMIMAGE_PARTITION_PADDING=20485760
